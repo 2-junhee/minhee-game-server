@@ -1,4 +1,4 @@
-package site.junyo.minheegameserver;
+package site.junyo.minheegame;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
