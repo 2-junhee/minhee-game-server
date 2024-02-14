@@ -1,18 +1,21 @@
 package site.junyo.minheegame.member.domain;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import site.junyo.minheegame.common.BaseTimeEntity;
 
 import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ToString
 @Entity
 @Table(name = "user_info")
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
