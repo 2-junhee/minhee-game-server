@@ -12,7 +12,7 @@ public class UserSignUpRequest {
     private String id;
 
     @NotBlank(message = "Password 입력은 필수입니다.")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,20}$", message = "유효하지 않은 비밀번호입니다.")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!]).{8,20}$", message = "유효하지 않은 비밀번호입니다.")
     private String password;
 
     @NotBlank(message = "Nickname 입력은 필수입니다.")
