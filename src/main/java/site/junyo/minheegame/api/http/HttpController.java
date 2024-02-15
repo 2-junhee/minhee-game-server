@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.junyo.minheegame.api.http.dto.request.UserLoginRequest;
 import site.junyo.minheegame.api.http.dto.request.UserSignUpRequest;
 import site.junyo.minheegame.api.http.dto.response.CommonResponse;
 import site.junyo.minheegame.user.service.UserService;
@@ -21,5 +23,11 @@ public class HttpController {
     public CommonResponse signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest) {
         userService.signUp(userSignUpRequest);
         return new CommonResponse(0, "요청이 성공적으로 처리됐습니다.");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
+        userService.login(userLoginRequest);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

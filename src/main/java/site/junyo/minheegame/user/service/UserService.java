@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import site.junyo.minheegame.api.http.dto.request.UserLoginRequest;
 import site.junyo.minheegame.api.http.dto.request.UserSignUpRequest;
 import site.junyo.minheegame.user.domain.User;
 import site.junyo.minheegame.user.repository.UserRepository;
@@ -28,6 +29,10 @@ public class UserService  {
                         .nickname(dto.getNickname()).build();
 
         userRepository.save(user);
+
+    }
+
+    public void login(UserLoginRequest dto) {
 
     }
 }
