@@ -41,14 +41,13 @@ public class UserService {
     public UserLoginResponse login(UserLoginRequest dto) {
 
         String id = dto.getId();
-        String password = dto.getPassword();
-
         Optional<User> userOpt = userRepository.findByUserId(id);
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
 
-            if (checkPassword(password, user.getPassword())) {
+            if (isPasswordMatch(dto.getPassword(), user.getPassword())) {
+
                 return UserLoginResponse.builder()
                         .code(SUCCESS.getCode())
                         .msg(SUCCESS.getMsg())
@@ -60,7 +59,7 @@ public class UserService {
         throw new InvalidLoginInfoException(LOGIN_FAIL);
     }
 
-    private boolean checkPassword(String providedPassword, String encryptedPassword) {
+    private boolean isPasswordMatch(String providedPassword, String encryptedPassword) {
 
         return bCryptPasswordEncoder.matches(providedPassword, encryptedPassword);
     }
