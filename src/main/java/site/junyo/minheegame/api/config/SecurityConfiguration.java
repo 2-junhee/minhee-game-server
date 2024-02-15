@@ -29,13 +29,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
-                .authorizeHttpRequests(authorizeHttpRequests -> {
-            authorizeHttpRequests
-                    .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                    .requestMatchers("/", "/api/v1/sign-up").permitAll()
-                    .anyRequest().authenticated();
-
-        }).csrf(AbstractHttpConfigurer::disable).build();
+                .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers("/", "/api/v1/sign-up", "/api/v1/login").permitAll()
+                        .anyRequest().authenticated()).csrf(AbstractHttpConfigurer::disable).build();
     }
 
     @Bean
