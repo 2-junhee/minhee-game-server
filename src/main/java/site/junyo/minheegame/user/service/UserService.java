@@ -57,7 +57,7 @@ public class UserService {
                         .build();
             }
         }
-        throw new InvalidLoginInfoException(LOGIN_FAIL.getCode(), LOGIN_FAIL.getMsg());
+        throw new InvalidLoginInfoException(LOGIN_FAIL);
     }
 
     private boolean checkPassword(String providedPassword, String encryptedPassword) {
