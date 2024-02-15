@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import site.junyo.minheegame.api.http.dto.request.UserLoginRequest;
 import site.junyo.minheegame.api.http.dto.request.UserSignUpRequest;
 import site.junyo.minheegame.api.http.dto.response.CommonResponse;
+import site.junyo.minheegame.api.http.dto.response.UserLoginResponse;
 import site.junyo.minheegame.user.service.UserService;
 
 @RequiredArgsConstructor
@@ -26,8 +27,8 @@ public class HttpController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
-        userService.login(userLoginRequest);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
+        UserLoginResponse dto = userService.login(userLoginRequest);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

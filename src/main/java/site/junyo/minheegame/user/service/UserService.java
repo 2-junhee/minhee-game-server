@@ -6,15 +6,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import site.junyo.minheegame.api.http.dto.request.UserLoginRequest;
 import site.junyo.minheegame.api.http.dto.request.UserSignUpRequest;
+import site.junyo.minheegame.api.http.dto.response.UserLoginResponse;
 import site.junyo.minheegame.user.domain.User;
+import site.junyo.minheegame.user.exception.InvalidLoginInfoException;
 import site.junyo.minheegame.user.repository.UserRepository;
 
+import java.util.Optional;
 import java.util.UUID;
+
+import static site.junyo.minheegame.user.util.ResponseInfo.LOGIN_FAIL;
+import static site.junyo.minheegame.user.util.ResponseInfo.SUCCESS;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserService  {
+public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -32,7 +38,30 @@ public class UserService  {
 
     }
 
-    public void login(UserLoginRequest dto) {
+    public UserLoginResponse login(UserLoginRequest dto) {
 
+        String id = dto.getId();
+        String password = dto.getPassword();
+
+        Optional<User> userOpt = userRepository.findByUserId(id);
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+
+            if (checkPassword(password, user.getPassword())) {
+                return UserLoginResponse.builder()
+                        .code(SUCCESS.getCode())
+                        .msg(SUCCESS.getMsg())
+                        .nickname(user.getNickname())
+                        .uuid(user.getUuid())
+                        .build();
+            }
+        }
+        throw new InvalidLoginInfoException(LOGIN_FAIL.getCode(), LOGIN_FAIL.getMsg());
+    }
+
+    private boolean checkPassword(String providedPassword, String encryptedPassword) {
+
+        return bCryptPasswordEncoder.matches(providedPassword, encryptedPassword);
     }
 }
