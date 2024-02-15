@@ -7,14 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import site.junyo.minheegame.api.http.dto.request.UserSignUpRequest;
 import site.junyo.minheegame.api.http.dto.response.CommonResponse;
-import site.junyo.minheegame.member.service.UserService;
+import site.junyo.minheegame.user.service.UserService;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
 @Slf4j
 public class HttpController {
-
     private final UserService userService;
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -23,6 +22,4 @@ public class HttpController {
         userService.signUp(userSignUpRequest);
         return new CommonResponse(0, "요청이 성공적으로 처리됐습니다.");
     }
-
-
 }

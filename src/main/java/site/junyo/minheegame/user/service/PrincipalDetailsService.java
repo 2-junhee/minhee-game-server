@@ -22,6 +22,8 @@ public class PrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String uuid) throws UsernameNotFoundException {
         User user = userRepository.findByUuid(uuid);
 
+        log.info("[loadUserByUsername] user = {} ", user);
+
         if (user == null) {
             throw new UsernameNotFoundException(uuid);
         } else {
