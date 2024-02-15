@@ -20,9 +20,9 @@ public class HttpController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign-up")
-    public CommonResponse signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest) {
+    public ResponseEntity<?> signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest) {
         userService.signUp(userSignUpRequest);
-        return new CommonResponse(0, "요청이 성공적으로 처리됐습니다.");
+        return new ResponseEntity<>(new CommonResponse(0, "요청이 성공적으로 처리 됐습니다."), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

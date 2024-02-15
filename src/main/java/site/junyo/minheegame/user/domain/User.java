@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "user_info")
 @SequenceGenerator(name = "USER_SEQ_GENERATOR",
-        sequenceName = "USER_SEQ",
+        sequenceName = "USER_INFO_IDX_SEQ",
         initialValue = 1, allocationSize = 1)
 public class User extends BaseTimeEntity {
 
