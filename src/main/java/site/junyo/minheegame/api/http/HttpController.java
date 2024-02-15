@@ -10,14 +10,21 @@ import site.junyo.minheegame.api.http.dto.request.UserLoginRequest;
 import site.junyo.minheegame.api.http.dto.request.UserSignUpRequest;
 import site.junyo.minheegame.api.http.dto.response.CommonResponse;
 import site.junyo.minheegame.api.http.dto.response.UserLoginResponse;
+import site.junyo.minheegame.jwt.JwtService;
 import site.junyo.minheegame.user.service.UserService;
+
+import java.util.Map;
+
+import static site.junyo.minheegame.api.http.util.Constant.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
 @Slf4j
 public class HttpController {
+
     private final UserService userService;
+    private final JwtService jwtService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign-up")
@@ -28,7 +35,14 @@ public class HttpController {
 
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
+
         UserLoginResponse dto = userService.login(userLoginRequest);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+
+        Map<String, String> payload = Map.of(PAYLOAD_KEY_SUB, dto.getUuid().toString(), PAYLOAD_KEY_NIC, dto.getNickname());
+        String token = jwtService.createToken(payload);
+
+        return ResponseEntity.ok()
+                .header(HEADER_NAME_AUTHORIZATION, token)
+                .body(dto);
     }
 }
