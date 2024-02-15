@@ -1,6 +1,5 @@
 package site.junyo.minheegame.api.config;
 
-import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +30,7 @@ public class SecurityConfiguration {
         return http
                 .authorizeHttpRequests(authorizeHttpRequests -> {
             authorizeHttpRequests
-                    .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                    .requestMatchers("/", "/api/v1/sign-up").permitAll()
+                    .requestMatchers("/", "/api/v1/**").permitAll()
                     .anyRequest().authenticated();
 
         }).csrf(AbstractHttpConfigurer::disable).build();
