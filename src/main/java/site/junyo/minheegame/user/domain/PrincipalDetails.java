@@ -1,13 +1,13 @@
-package site.junyo.minheegame.config.auth;
+package site.junyo.minheegame.user.domain;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import site.junyo.minheegame.member.domain.User;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class PrincipalDetails implements UserDetails {
@@ -30,7 +30,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getId();
+        return UUID.randomUUID().toString();
     }
 
     @Override

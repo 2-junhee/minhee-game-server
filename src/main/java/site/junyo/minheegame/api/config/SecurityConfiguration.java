@@ -1,4 +1,4 @@
-package site.junyo.minheegame.config;
+package site.junyo.minheegame.api.config;
 
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeHttpRequests -> {
             authorizeHttpRequests
                     .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                    .requestMatchers("/", "/sign-up").permitAll()
+                    .requestMatchers("/", "/api/v1/sign-up").permitAll()
                     .anyRequest().authenticated();
 
         }).csrf(AbstractHttpConfigurer::disable).build();
