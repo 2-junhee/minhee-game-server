@@ -1,4 +1,4 @@
-package site.junyo.minheegame.exception;
+package site.junyo.minheegame.api.exception;
 
 
 import com.sun.jdi.request.InvalidRequestStateException;

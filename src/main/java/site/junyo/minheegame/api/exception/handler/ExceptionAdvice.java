@@ -1,4 +1,4 @@
-package site.junyo.minheegame.exception.handler;
+package site.junyo.minheegame.api.exception.handler;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import site.junyo.minheegame.api.http.dto.response.CommonResponse;
-import site.junyo.minheegame.exception.InvalidException;
+import site.junyo.minheegame.api.exception.InvalidException;
 
 import java.util.Objects;
 
@@ -18,14 +18,5 @@ import java.util.Objects;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(InvalidException.class)
-    public CommonResponse invalidRequest(MethodArgumentNotValidException e, BindingResult bindingResult) {
-        FieldError fieldError = bindingResult.getFieldError();
-        Objects.requireNonNull(fieldError);
-
-        String[] s = fieldError.getDefaultMessage().split(":");
-    return new CommonResponse(2, "d");
-    }
 
 }

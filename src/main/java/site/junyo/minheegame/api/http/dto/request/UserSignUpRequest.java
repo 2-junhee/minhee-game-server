@@ -3,7 +3,7 @@ package site.junyo.minheegame.api.http.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import site.junyo.minheegame.member.domain.User;
+import site.junyo.minheegame.user.domain.User;
 
 @Data
 public class UserSignUpRequest {
