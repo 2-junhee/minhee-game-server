@@ -24,7 +24,6 @@ public class User extends BaseTimeEntity {
             generator = "USER_SEQ_GENERATOR")
     private Long idx;
 
-    // 수정
     @Column(nullable = false, unique = true)
     private UUID uuid;
 
