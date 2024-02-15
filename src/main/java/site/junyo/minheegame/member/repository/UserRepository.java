@@ -8,7 +8,6 @@ import site.junyo.minheegame.member.domain.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.uuid = :username")
     User findByUuid(String username);
-
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.id = :userId")
     boolean existsByUserId(@Param("userId") String userId);
 }

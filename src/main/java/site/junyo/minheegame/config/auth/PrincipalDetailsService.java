@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import site.junyo.minheegame.member.domain.User;
 import site.junyo.minheegame.member.repository.UserRepository;
 
+import java.util.UUID;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,7 +21,10 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+
+        String randomUUID = UUID.randomUUID().toString();
+
+        User user = userRepository.findByUuid(randomUUID);
 
         if (user == null) {
             throw new UsernameNotFoundException(username);
