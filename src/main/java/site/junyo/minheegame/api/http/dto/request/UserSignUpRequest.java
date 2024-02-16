@@ -3,7 +3,6 @@ package site.junyo.minheegame.api.http.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import site.junyo.minheegame.user.domain.User;
 
 @Data
 public class UserSignUpRequest {
@@ -20,11 +19,5 @@ public class UserSignUpRequest {
     @Pattern(regexp = "^[a-zA-Z가-힣0-9]{2,20}$", message = "유효하지 않은 닉네임입니다.")
     private String nickname;
 
-    public User toEntity() {
-        return User.builder()
-                .id(id)
-                .password(password)
-                .nickname(nickname)
-                .build();
-    }
 }
+
