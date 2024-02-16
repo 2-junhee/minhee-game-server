@@ -1,0 +1,17 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+  # Postgres Database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/minheegame
+    username: minhee
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
