@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import site.junyo.minheegame.api.exception.DuplicateUserIdException;
 import site.junyo.minheegame.api.http.dto.response.CommonResponse;
-
 import site.junyo.minheegame.api.http.dto.response.ErrorResponse;
 
 import java.util.List;
@@ -30,6 +29,7 @@ public class GlobalExceptionHandler {
             String fieldName = fieldError.getField();
             int errorCode = getErrorCodeForField(fieldName);
             String errorMessage = fieldError.getDefaultMessage();
+
 
             return new ResponseEntity<>(new CommonResponse(errorCode, errorMessage), HttpStatus.BAD_REQUEST);
         }
