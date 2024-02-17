@@ -31,11 +31,17 @@ public interface JwtService {
 
     /**
      * 토큰 발급 메서드. 매개변수로 payload에 들어갈 항목을 넣어주면 곧바로 토큰을 반환한다.
-     * Header, Signature 및 payload 중 exp 값은 내규에 따라 자동으로 생성된다. 즉, 매개변수로 넣어주는 exp 값은 무시된다.
+     * Header, Signature 및 payload 중 iss, iat, exp 값은 내규에 따라 자동으로 생성된다. 즉, 매개변수로 넣어주는 iss, iat, exp 값은 무시된다.
+     *
+     * <p>
+     * 아래 두 값은 반드시 넣어줄 것. 그렇지 않으면 {@code IllegalArgumentException}이 발생한다.
+     * <li>sub: user UUID</li>
+     * <li>nic: user nickname</li>
      *
      * @param payload 토큰의 payload 부분에 들어갈 데이터 {@code Map}
      * @return 토큰
      * @since 0.1.0
+     * @throws IllegalArgumentException {@code payload}에 sub 또는 nic 값이 존재하지 않거나, sub 값이 UUID 형식이 아닌 경우
      */
     String createToken(Map<String, String> payload);
 
@@ -63,7 +69,7 @@ public interface JwtService {
      * @param token sub 값을 추출할 토큰
      * @return token의 sub 값
      * @since 0.1.0
-     * @throws InvalidTokenException 토큰의 서명이 유효하지 않은 경우 이 예외가 발생
+     * @throws InvalidTokenException 토큰의 서명이 유효하지 않은 경우
      */
     String getSubject(String token);
 
@@ -76,7 +82,7 @@ public interface JwtService {
      * @param token nic 값을 추출할 토큰
      * @return token의 nic 값
      * @since 0.1.0
-     * @throws InvalidTokenException 토큰의 서명이 유효하지 않은 경우 이 예외가 발생
+     * @throws InvalidTokenException 토큰의 서명이 유효하지 않은 경우
      */
     String getNickname(String token);
 }
