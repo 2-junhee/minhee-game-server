@@ -1,5 +1,8 @@
 package site.junyo.minheegame.jwt;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
@@ -61,16 +64,57 @@ class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean isValid(String token) {
-        return false;
+        JwtParser jwtParser = getJwtParser();
+
+        Jws<Claims> jws;
+        try {
+            jws = jwtParser.parseSignedClaims(token);
+        } catch (Exception e) {
+            return false;
+        }
+
+        boolean typeEq = jws.getHeader().getType().equals(HEADER_TYPE);
+        if (!typeEq) {
+            return false;
+        }
+
+        Claims payload = jws.getPayload();
+        boolean issEq = payload.getIssuer().equals(PAYLOAD_ISSUER);
+        Date expiration = payload.getExpiration();
+        boolean passedExp = expiration.before(new Date());
+        if (!issEq || passedExp) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public String getSubject(String token) {
-        return null;
+        JwtParser jwtParser = getJwtParser();
+        Jws<Claims> jws = getParsedJws(token, jwtParser);
+        return jws.getPayload().getSubject();
     }
 
     @Override
     public String getNickname(String token) {
-        return null;
+        JwtParser jwtParser = getJwtParser();
+        Jws<Claims> jws = getParsedJws(token, jwtParser);
+        return jws.getPayload().get("nic", String.class);
+    }
+
+    private JwtParser getJwtParser() {
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .requireIssuer(PAYLOAD_ISSUER)
+                .build();
+    }
+
+    private Jws<Claims> getParsedJws(String token, JwtParser jwtParser) {
+        try {
+            return jwtParser.parseSignedClaims(token);
+        } catch (Exception e) {
+            throw new InvalidTokenException("토큰의 서명이 유효하지 않습니다.");
+        }
     }
 }
