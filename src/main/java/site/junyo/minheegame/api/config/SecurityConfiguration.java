@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import site.junyo.minheegame.api.filter.JSONUsernamePasswordAuthenticationFilter;
+import site.junyo.minheegame.api.filter.handler.LogoutSuccessHandlerImpl;
 import site.junyo.minheegame.api.http.util.HttpServletUtil;
 import site.junyo.minheegame.jwt.JwtService;
 
@@ -56,6 +57,10 @@ public class SecurityConfiguration {
                                 this.httpServletUtil,
                                 this.jwtService),
                         UsernamePasswordAuthenticationFilter.class)
+
+                .logout((logout) -> logout
+                        .logoutUrl("/api/v1/logout")
+                        .logoutSuccessHandler(new LogoutSuccessHandlerImpl(httpServletUtil)))
 
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
