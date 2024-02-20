@@ -10,6 +10,8 @@ import site.junyo.minheegame.user.domain.PrincipalDetails;
 import site.junyo.minheegame.user.domain.User;
 import site.junyo.minheegame.user.repository.UserRepository;
 
+import java.util.Optional;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,13 +21,13 @@ public class PrincipalDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String uuid) throws UsernameNotFoundException {
-        User user = userRepository.findByUuid(uuid);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> userOpt = userRepository.findByUserId(username);
 
-        if (user == null) {
-            throw new UsernameNotFoundException(uuid);
+        if (userOpt.isEmpty()) {
+            throw new UsernameNotFoundException(username);
         } else {
-            return new PrincipalDetails(user);
+            return new PrincipalDetails(userOpt.get());
         }
     }
 }
