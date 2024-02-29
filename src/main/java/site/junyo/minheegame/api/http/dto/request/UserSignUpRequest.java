@@ -20,11 +20,4 @@ public class UserSignUpRequest {
     @Pattern(regexp = "^[a-zA-Z가-힣0-9]{2,20}$", message = "유효하지 않은 닉네임입니다.")
     private String nickname;
 
-    public User toEntity() {
-        return User.builder()
-                .id(id)
-                .password(password)
-                .nickname(nickname)
-                .build();
-    }
 }

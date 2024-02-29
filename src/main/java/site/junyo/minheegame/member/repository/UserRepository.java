@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import site.junyo.minheegame.member.domain.User;
 
+public interface UserRepository extends JpaRepository<User, Long> {
+    @Query("SELECT u FROM User u WHERE u.uuid = :username")
+    User findByUuid(String username);
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    @Query("SELECT u FROM User u WHERE u.id = :username")
-    User findByUsername(@Param("username") String username);
-
+    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.id = :userId")
+    boolean existsByUserId(@Param("userId") String userId);
 }
