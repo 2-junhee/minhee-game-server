@@ -1,10 +1,8 @@
 package site.junyo.minheegame.member.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchConnectionDetails;
 import site.junyo.minheegame.common.BaseTimeEntity;
 
 import java.util.UUID;
@@ -33,6 +31,11 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, length = 20)
     private String nickname;
 
-
+    @Builder
+    public User(String id, String password, String nickname) {
+        this.id = id;
+        this.password = password;
+        this.nickname = nickname;
+    }
 }
 
